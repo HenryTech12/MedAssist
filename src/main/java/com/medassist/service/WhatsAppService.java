@@ -22,7 +22,7 @@ public class WhatsAppService {
     private static final Logger logger = LoggerFactory.getLogger(WhatsAppService.class);
 
     @Autowired
-    private PatientService patientService;
+    private PatientRegistrationService patientService;
 
     @Autowired
     private PatientRegistrationService registrationService;
