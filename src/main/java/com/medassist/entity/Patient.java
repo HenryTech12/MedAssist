@@ -21,7 +21,7 @@ public class Patient {
 
     @Id
     @Column(columnDefinition = "BINARY(16)")
-    @GeneratedValue(strategy = GenerationType.UUID)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID id;
 
     @Column(nullable = false, unique = true, length = 20)

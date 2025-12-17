@@ -23,7 +23,7 @@ public class Message {
 
     @Id
     @Column(columnDefinition = "BINARY(16)")
-    @GeneratedValue(strategy = GenerationType.UUID)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID id;
 
     @ManyToOne(fetch = FetchType.LAZY)

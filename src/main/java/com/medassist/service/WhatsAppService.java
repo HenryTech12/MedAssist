@@ -42,7 +42,7 @@ public class WhatsAppService {
 
         Conversation conversation = getOrCreateConversation(patient);
 
-        Message userMessage = Message.builder()
+        Message userMessage =  Message.builder()
                 .conversation(conversation)
                 .role(MessageRole.USER)
                 .content(messageBody)
@@ -51,7 +51,7 @@ public class WhatsAppService {
         conversationRepository.save(conversation);
 
         AIServiceRequest aiRequest = AIServiceRequest.builder()
-                .messageId(userMessage.getId().toString())
+                .messageId(UUID.randomUUID().toString())
                 .patientId(patient.getId().toString())
                 .sessionId(conversation.getSessionId())
                 .message(messageBody)

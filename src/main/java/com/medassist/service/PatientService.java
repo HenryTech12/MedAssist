@@ -33,7 +33,7 @@ public class PatientService {
     public Patient createOrGetPatient(String phone, String clinicId) {
         return patientRepository.findByPhone(phone)
                 .orElseGet(() -> {
-                    Clinic clinic = clinicRepository.findById(UUID.fromString(clinicId))
+                    Clinic clinic = clinicRepository.findById(UUID.fromString("24cb85f9-db74-11f0-939e-b2e962fd1365"))
                             .orElseThrow(() -> new NotFoundException("Clinic not found"));
 
                     Patient patient = Patient.builder()
