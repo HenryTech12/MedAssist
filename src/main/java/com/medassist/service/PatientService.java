@@ -31,18 +31,7 @@ public class PatientService {
 
     @Transactional
     public Patient createOrGetPatient(String phone, String clinicId) {
-        return patientRepository.findByPhone(phone)
-                .orElseGet(() -> {
-                    Clinic clinic = clinicRepository.findById(UUID.fromString("24cb85f9-db74-11f0-939e-b2e962fd1365"))
-                            .orElseThrow(() -> new NotFoundException("Clinic not found"));
-
-                    Patient patient = Patient.builder()
-                            .phone(phone)
-                            .clinic(clinic)
-                            .build();
-
-                    return patientRepository.save(patient);
-                });
+        return patientRepository.findByPhone(phone).orElse(null);
     }
 
     private PatientDTO toPatientDTO(Patient patient) {

@@ -2,6 +2,7 @@ package com.medassist.service;
 
 import com.medassist.dto.AIServiceRequest;
 import com.medassist.dto.AIServiceResponse;
+import com.medassist.dto.BotMessages;
 import com.medassist.entity.Conversation;
 import com.medassist.entity.Message;
 import com.medassist.entity.Patient;
@@ -40,9 +41,13 @@ public class WhatsAppService {
 
         Patient patient = patientService.createOrGetPatient(normalizedPhone, getDefaultClinicId());
 
+        if(patient == null) {
+            twilioService.sendMessage(normalizedPhone, BotMessages.WELCOME_MESSAGE);
+        }
+
         Conversation conversation = getOrCreateConversation(patient);
 
-        Message userMessage =  Message.builder()
+        Message userMessage = Message.builder()
                 .conversation(conversation)
                 .role(MessageRole.USER)
                 .content(messageBody)
@@ -51,7 +56,7 @@ public class WhatsAppService {
         conversationRepository.save(conversation);
 
         AIServiceRequest aiRequest = AIServiceRequest.builder()
-                .messageId(UUID.randomUUID().toString())
+                .messageId(userMessage.getId().toString())
                 .patientId(patient.getId().toString())
                 .sessionId(conversation.getSessionId())
                 .message(messageBody)
