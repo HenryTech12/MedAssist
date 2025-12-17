@@ -28,9 +28,9 @@ public class PatientRegistrationService {
     
     // Clinic mapping - maps user's selection (1, 2, 3) to clinic UUIDs
     private static final Map<String, String> CLINIC_OPTIONS = Map.of(
-        "1", "00000000-0000-0000-0000-000000000001",  // City Health Clinic
-        "2", "00000000-0000-0000-0000-000000000002",  // Green Cross Pharmacy
-        "3", "00000000-0000-0000-0000-000000000003"   // Life Care Hospital
+        "1", "24cb85f9-db74-11f0-939e-b2e962fd1365",  // City Health Clinic
+        "2", "24cb8bbb-db74-11f0-939e-b2e962fd1365",  // Green Cross Pharmacy
+        "3", "24cb8d2f-db74-11f0-939e-b2e962fd1365"   // Life Care Hospital
     );
     
     /**
