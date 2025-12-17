@@ -20,6 +20,7 @@ import java.util.UUID;
 public class Patient {
 
     @Id
+    @Column(columnDefinition = "BINARY(16)")
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 

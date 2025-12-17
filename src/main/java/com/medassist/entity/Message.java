@@ -22,6 +22,7 @@ import java.util.UUID;
 public class Message {
 
     @Id
+    @Column(columnDefinition = "BINARY(16)")
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
