@@ -10,6 +10,7 @@ import com.medassist.entity.Patient;
 import com.medassist.enums.ConversationStatus;
 import com.medassist.enums.MessageRole;
 import com.medassist.repository.ConversationRepository;
+import com.medassist.repository.PatientRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,6 +36,9 @@ public class WhatsAppService {
 
     @Autowired
     private ConversationRepository conversationRepository;
+
+    @Autowired
+    private PatientRepository patientRepository;
 
     @Transactional
     public void handleIncomingMessage(String fromPhone, String messageBody) {
@@ -75,6 +79,7 @@ public class WhatsAppService {
                 .content(messageBody)
                 .build();
         conversation.addMessage(userMessage);
+        patientRepository.save(patient);
         conversationRepository.save(conversation);
 
         AIServiceRequest aiRequest = AIServiceRequest.builder()
