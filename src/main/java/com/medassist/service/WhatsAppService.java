@@ -56,7 +56,7 @@ public class WhatsAppService {
                Clinic clinic = patientRegistrationService.getClinic();
                Patient updatePatientData = Patient.builder()
                        .clinic(clinic)
-                       .phone(fromPhone)
+                       .phone(normalizedPhone)
                        .registeredAt(LocalDateTime.now())
                        .build();
                communicate(normalizedPhone,messageBody,updatePatientData);
