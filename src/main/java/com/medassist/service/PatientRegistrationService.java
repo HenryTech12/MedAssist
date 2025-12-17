@@ -1,5 +1,6 @@
 package com.medassist.service;
 
+import com.medassist.dto.PatientDTO;
 import com.medassist.entity.Clinic;
 import com.medassist.entity.Patient;
 import com.medassist.repository.ClinicRepository;
@@ -9,6 +10,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
@@ -125,5 +127,10 @@ public class PatientRegistrationService {
         // Optional: Delete pending registrations older than 1 hour
         // This prevents database pollution from abandoned registrations
         log.info("Cleanup of stale pending registrations (not implemented yet)");
+    }
+
+    public List<PatientDTO> getPatientsByClinic(String clinicId) {
+        return patientRepository.findByClinicId(UUID.fromString(clinicId))
+                .stream().map(data -> new PatientDTO(data.getId().toString(),data.getPhone(),data.getFirstName(),data.getLastName(),data.getClinic().getId().toString(),data.getRegisteredAt())).toList();
     }
 }
