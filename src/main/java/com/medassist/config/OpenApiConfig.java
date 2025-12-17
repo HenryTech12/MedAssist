@@ -18,8 +18,8 @@ import io.swagger.v3.oas.annotations.servers.Servers;
                 version = "1.0",
                 termsOfService = "Terms Of Service",
                 license = @License(
-                        name = "hawamoni license",
-                        url = "http://hawamoni.vercel.app"
+                        name = "MedAssist license",
+                        url = "https://med-assist-xi-liart.vercel.app/"
                 ),
                 contact = @Contact(
                         name = "Henry",
@@ -33,7 +33,7 @@ import io.swagger.v3.oas.annotations.servers.Servers;
                 ),
                 @Server(
                         description = "Production Development",
-                        url = "https://hawamoni.onrender.com"
+                        url = "https://medassist-23zx.onrender.com"
                 )
         },
         security = @SecurityRequirement(
