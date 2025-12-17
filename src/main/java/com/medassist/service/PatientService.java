@@ -34,6 +34,10 @@ public class PatientService {
         return patientRepository.findByPhone(phone).orElse(null);
     }
 
+    public Clinic getClinic() {
+        return clinicRepository.findById(UUID.fromString("24cb85f9-db74-11f0-939e-b2e962fd1365")).orElse(null);
+    }
+
     private PatientDTO toPatientDTO(Patient patient) {
         return PatientDTO.builder()
                 .id(patient.getId().toString())
@@ -43,5 +47,12 @@ public class PatientService {
                 .clinicId(patient.getClinic().getId().toString())
                 .registeredAt(patient.getRegisteredAt())
                 .build();
+    }
+
+    public String completeRegistration(Patient patient) {
+        return patient.getFirstName();
+    }
+
+    public void processRegistration(String messageBody) {
     }
 }
