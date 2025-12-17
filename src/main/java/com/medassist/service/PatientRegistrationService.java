@@ -3,7 +3,6 @@ package com.medassist.service;
 import com.medassist.dto.PatientDTO;
 import com.medassist.entity.Clinic;
 import com.medassist.entity.Patient;
-import com.medassist.exception.NotFoundException;
 import com.medassist.repository.ClinicRepository;
 import com.medassist.repository.PatientRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +13,7 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
-public class PatientService {
+public class PatientRegistrationService {
 
     @Autowired
     private PatientRepository patientRepository;

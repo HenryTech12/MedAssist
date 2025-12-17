@@ -26,7 +26,7 @@ public class WhatsAppService {
     private static final Logger logger = LoggerFactory.getLogger(WhatsAppService.class);
 
     @Autowired
-    private PatientService patientService;
+    private PatientRegistrationService patientRegistrationService;
 
     @Autowired
     private AIServiceClient aiServiceClient;
@@ -46,14 +46,14 @@ public class WhatsAppService {
 
         String normalizedPhone = normalizePhone(fromPhone);
 
-        Patient patient = patientService.createOrGetPatient(normalizedPhone, getDefaultClinicId());
+        Patient patient = patientRegistrationService.createOrGetPatient(normalizedPhone, getDefaultClinicId());
 
         if(patient == null) {
             twilioService.sendMessage(normalizedPhone, BotMessages.WELCOME_MESSAGE);
         }
-        else if(patientService.completeRegistration(patient) == null) {
+        else if(patientRegistrationService.completeRegistration(patient) == null) {
            if(messageBody.contains("1")) {
-               Clinic clinic = patientService.getClinic();
+               Clinic clinic = patientRegistrationService.getClinic();
                Patient updatePatientData = Patient.builder()
                        .clinic(clinic)
                        .phone(fromPhone)

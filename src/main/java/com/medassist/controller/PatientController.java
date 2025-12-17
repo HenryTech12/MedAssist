@@ -2,7 +2,7 @@ package com.medassist.controller;
 
 import com.medassist.dto.PatientDTO;
 import com.medassist.security.UserPrincipal;
-import com.medassist.service.PatientService;
+import com.medassist.service.PatientRegistrationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -14,13 +14,13 @@ import java.util.List;
 public class PatientController {
 
     @Autowired
-    private PatientService patientService;
+    private PatientRegistrationService patientRegistrationService;
 
     @GetMapping
     public ResponseEntity<List<PatientDTO>> getPatients(
             @AuthenticationPrincipal UserPrincipal principal
     ) {
-        List<PatientDTO> patients = patientService.getPatientsByClinic(principal.getClinicId());
+        List<PatientDTO> patients = patientRegistrationService.getPatientsByClinic(principal.getClinicId());
         return ResponseEntity.ok(patients);
     }
 }
