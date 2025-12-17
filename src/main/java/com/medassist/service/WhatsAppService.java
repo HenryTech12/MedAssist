@@ -44,44 +44,46 @@ public class WhatsAppService {
         if(patient == null) {
             twilioService.sendMessage(normalizedPhone, BotMessages.WELCOME_MESSAGE);
         }
+        else {
 
-        Conversation conversation = getOrCreateConversation(patient);
+            Conversation conversation = getOrCreateConversation(patient);
 
-        Message userMessage = Message.builder()
-                .conversation(conversation)
-                .role(MessageRole.USER)
-                .content(messageBody)
-                .build();
-        conversation.addMessage(userMessage);
-        conversationRepository.save(conversation);
+            Message userMessage = Message.builder()
+                    .conversation(conversation)
+                    .role(MessageRole.USER)
+                    .content(messageBody)
+                    .build();
+            conversation.addMessage(userMessage);
+            conversationRepository.save(conversation);
 
-        AIServiceRequest aiRequest = AIServiceRequest.builder()
-                .messageId(userMessage.getId().toString())
-                .patientId(patient.getId().toString())
-                .sessionId(conversation.getSessionId())
-                .message(messageBody)
-                .build();
+            AIServiceRequest aiRequest = AIServiceRequest.builder()
+                    .messageId(UUID.randomUUID().toString())
+                    .patientId(patient.getId().toString())
+                    .sessionId(conversation.getSessionId())
+                    .message(messageBody)
+                    .build();
 
-        AIServiceResponse aiResponse = aiServiceClient.processMessage(aiRequest);
+            AIServiceResponse aiResponse = aiServiceClient.processMessage(aiRequest);
 
-        Message assistantMessage = Message.builder()
-                .conversation(conversation)
-                .role(MessageRole.ASSISTANT)
-                .content(aiResponse.getResponse())
-                .triageLevel(aiResponse.getTriageLevel())
-                .build();
-        conversation.addMessage(assistantMessage);
+            Message assistantMessage = Message.builder()
+                    .conversation(conversation)
+                    .role(MessageRole.ASSISTANT)
+                    .content(aiResponse.getResponse())
+                    .triageLevel(aiResponse.getTriageLevel())
+                    .build();
+            conversation.addMessage(assistantMessage);
 
-        if (aiResponse.getTriageLevel() != null) {
-            conversation.setTriageLevel(aiResponse.getTriageLevel());
+            if (aiResponse.getTriageLevel() != null) {
+                conversation.setTriageLevel(aiResponse.getTriageLevel());
+            }
+
+            conversationRepository.save(conversation);
+
+            twilioService.sendMessage(normalizedPhone, aiResponse.getResponse());
+
+            logger.info("Processed message for patient {} - Triage: {}",
+                    patient.getId(), aiResponse.getTriageLevel());
         }
-
-        conversationRepository.save(conversation);
-
-        twilioService.sendMessage(normalizedPhone, aiResponse.getResponse());
-
-        logger.info("Processed message for patient {} - Triage: {}",
-                patient.getId(), aiResponse.getTriageLevel());
     }
 
     private String normalizePhone(String phone) {
