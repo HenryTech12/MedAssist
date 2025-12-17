@@ -85,7 +85,6 @@ public class WhatsAppService {
                 .content(messageBody)
                 .build();
         conversation.addMessage(userMessage);
-        patientRepository.save(patient);
         conversationRepository.save(conversation);
 
         AIServiceRequest aiRequest = AIServiceRequest.builder()
