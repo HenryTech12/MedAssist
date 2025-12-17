@@ -21,7 +21,7 @@ public class Patient {
 
     @Id
     @Column(columnDefinition = "BINARY(16)")
-    @GeneratedValue(strategy = GenerationType.UUID)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID id;
 
     @Column(nullable = false, unique = true, length = 20)
@@ -37,11 +37,17 @@ public class Patient {
     @Column(name = "last_name", length = 100)
     private String lastName;
 
+    @Column(name = "registration_status", length = 20)
+    private String registrationStatus; // "PENDING_CLINIC" or "COMPLETE"
+
     @Column(name = "registered_at", nullable = false, updatable = false)
     private LocalDateTime registeredAt;
 
     @PrePersist
     protected void onCreate() {
         registeredAt = LocalDateTime.now();
+        if (registrationStatus == null) {
+            registrationStatus = "COMPLETE";
+        }
     }
 }

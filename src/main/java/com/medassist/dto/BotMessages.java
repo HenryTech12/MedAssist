@@ -22,6 +22,12 @@ public class BotMessages {
             "❌ Invalid selection.\n\n" +
                     "Please reply with 1, 2, or 3 to select your clinic.";
 
+    // Ask for patient name
+    public static final String ASK_NAME =
+            "Great! 👍\n\n" +
+                    "What's your full name?\n\n" +
+                    "(Example: John Doe)";
+
     // Emergency detected
     public static final String EMERGENCY_ALERT =
             "🚨 EMERGENCY DETECTED\n\n" +
