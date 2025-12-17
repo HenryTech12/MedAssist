@@ -71,6 +71,12 @@ public class WhatsAppService {
     }
 
     public void communicate(String normalizedPhone, String messageBody, Patient patient) {
+
+        // ✅ Ensure patient is persistent
+        if (patient.getId() == null) {
+            patient = patientRepository.save(patient);
+        }
+
         Conversation conversation = getOrCreateConversation(patient);
 
         Message userMessage = Message.builder()
