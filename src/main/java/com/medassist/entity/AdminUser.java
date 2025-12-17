@@ -30,7 +30,7 @@ public class AdminUser {
     @Column(name = "password_hash", nullable = false)
     private String passwordHash;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "clinic_id", nullable = false)
     private Clinic clinic;
 
