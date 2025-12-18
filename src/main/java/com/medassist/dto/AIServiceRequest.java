@@ -16,8 +16,8 @@ import java.util.Map;
 @AllArgsConstructor
 public class AIServiceRequest {
 
-    private String messageId;
-    private String patientId;
+    private String message_id;
+    private String patient_id;
     private String message;
     private LocalDateTime timestamp;
     private List<ConversationHistory> conversationHistory;
