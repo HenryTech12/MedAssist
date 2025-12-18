@@ -22,7 +22,7 @@ public class AIServiceResponse {
     private ExtractedDataDto extractedData;
     private String nextAction;
     @JsonProperty("triage_level")
-    private TriageLevel triageLevel; // nullable
+    private String triageLevel; // nullable
     private Boolean requiresHumanReview;
     private LocalDateTime timestamp;
 }

@@ -9,6 +9,7 @@ import com.medassist.entity.Message;
 import com.medassist.entity.Patient;
 import com.medassist.enums.ConversationStatus;
 import com.medassist.enums.MessageRole;
+import com.medassist.enums.TriageLevel;
 import com.medassist.repository.ConversationRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -145,13 +146,17 @@ public class WhatsAppService {
         Message assistantMessage = Message.builder()
                 .conversation(conversation)
                 .role(MessageRole.ASSISTANT)
+                .triageLevel(getTriageLevel(aiResponse.getTriageLevel()))
                 .content(aiResponse.getResponse())
-                .triageLevel(aiResponse.getTriageLevel())
                 .build();
+
         conversation.addMessage(assistantMessage);
 
         if (aiResponse.getTriageLevel() != null) {
-            conversation.setTriageLevel(aiResponse.getTriageLevel());
+            conversation.setTriageLevel(getTriageLevel(aiResponse.getTriageLevel()));
+        }
+        else{
+            conversation.setTriageLevel(TriageLevel.HIGH);
         }
 
         conversationRepository.save(conversation);
@@ -160,6 +165,22 @@ public class WhatsAppService {
 
         logger.info("Processed message for patient {} - Triage: {}",
                 patient.getId(), aiResponse.getTriageLevel());
+    }
+    
+    public TriageLevel getTriageLevel(String level) {
+        if(level.equalsIgnoreCase("low")) {
+            return TriageLevel.LOW;
+        }
+        else if(level.equalsIgnoreCase("medium")) {
+            return TriageLevel.MEDIUM;
+        }
+        else if(level.equalsIgnoreCase("critical")) {
+            return TriageLevel.CRITICAL;
+        }
+        else if(level.equalsIgnoreCase("high")) {
+            return TriageLevel.HIGH;
+        }
+        return TriageLevel.LOW;
     }
 
     private String normalizePhone(String phone) {
