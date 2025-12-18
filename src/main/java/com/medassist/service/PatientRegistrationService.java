@@ -58,7 +58,7 @@ public class PatientRegistrationService {
         
         // Create patient with pending status and temporary clinic
         Clinic defaultClinic = clinicRepository.findById(
-                UUID.fromString("00000000-0000-0000-0000-000000000001"))
+                UUID.fromString(CLINIC_OPTIONS.get("1")))
             .orElseThrow(() -> new RuntimeException("Default clinic not found"));
         
         Patient patient = Patient.builder()
