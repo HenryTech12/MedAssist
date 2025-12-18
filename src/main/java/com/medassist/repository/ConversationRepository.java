@@ -17,6 +17,8 @@ public interface ConversationRepository extends JpaRepository<Conversation, UUID
 
     List<Conversation> findByClinicIdOrderByLastMessageAtDesc(UUID clinicId);
 
+    List<Conversation> findByStatusAndTriageLevel(ConversationStatus status, TriageLevel triageLevel);
+
     List<Conversation> findByClinicIdAndStatusOrderByLastMessageAtDesc(UUID clinicId, ConversationStatus status);
 
     List<Conversation> findByClinicIdAndTriageLevelOrderByLastMessageAtDesc(UUID clinicId, TriageLevel triageLevel);

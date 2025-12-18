@@ -30,7 +30,7 @@ public class Conversation {
     @Column(columnDefinition = "BINARY(16)")
     private UUID id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "patient_id", nullable = false)
     private Patient patient;
 
@@ -41,7 +41,7 @@ public class Conversation {
     @Column(name = "session_id", length = 100)
     private String sessionId;
 
-    @OneToMany(mappedBy = "conversation", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "conversation", cascade = CascadeType.ALL, orphanRemoval = true,fetch = FetchType.EAGER)
     @Builder.Default
     private List<Message> messages = new ArrayList<>();
 

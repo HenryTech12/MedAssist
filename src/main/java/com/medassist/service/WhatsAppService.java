@@ -166,7 +166,7 @@ public class WhatsAppService {
         logger.info("Processed message for patient {} - Triage: {}",
                 patient.getId(), aiResponse.getTriageLevel());
     }
-    
+
     public TriageLevel getTriageLevel(String level) {
         if(level.equalsIgnoreCase("low")) {
             return TriageLevel.LOW;

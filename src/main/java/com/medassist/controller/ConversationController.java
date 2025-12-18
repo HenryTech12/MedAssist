@@ -5,6 +5,7 @@ import com.medassist.dto.ConversationDetailDTO;
 import com.medassist.dto.SendMessageRequest;
 import com.medassist.dto.SendMessageResponse;
 import com.medassist.enums.ConversationStatus;
+import com.medassist.enums.TriageLevel;
 import com.medassist.security.UserPrincipal;
 import com.medassist.service.ConversationService;
 import jakarta.validation.Valid;
@@ -30,8 +31,8 @@ public class ConversationController {
     ) {
         List<ConversationDTO> conversations = conversationService.getConversations(
                 principal.getClinicId(),
-                status,
-                triageLevel
+                ConversationStatus.valueOf(status),
+                TriageLevel.valueOf(triageLevel)
         );
         return ResponseEntity.ok(conversations);
     }

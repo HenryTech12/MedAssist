@@ -29,25 +29,12 @@ public class ConversationService {
     @Autowired
     private TwilioService twilioService;
 
-    public List<ConversationDTO> getConversations(String clinicId, String status, String triageLevel) {
-        Specification<Conversation> spec = (root, query, cb) -> {
-            List<Predicate> predicates = new ArrayList<>();
-            predicates.add(cb.equal(root.get("clinic").get("id"), UUID.fromString(clinicId)));
+    @Autowired
+    private PatientRegistrationService patientRegistrationService;
 
-            if (status != null && !status.isEmpty()) {
-                predicates.add(cb.equal(root.get("status"), ConversationStatus.valueOf(status.toUpperCase())));
-            }
-
-            if (triageLevel != null && !triageLevel.isEmpty()) {
-                predicates.add(cb.equal(root.get("triageLevel"), TriageLevel.valueOf(triageLevel.toUpperCase())));
-            }
-
-            query.orderBy(cb.desc(root.get("lastMessageAt")));
-
-            return cb.and(predicates.toArray(new Predicate[0]));
-        };
-
-        List<Conversation> conversations = conversationRepository.findAll(spec);
+    public List<ConversationDTO> getConversations(String clinicId, ConversationStatus status, TriageLevel triageLevel) {
+        List<Conversation> conversations = conversationRepository.
+                findByStatusAndTriageLevel(status, triageLevel);
 
         return conversations.stream()
                 .map(this::toConversationDTO)
