@@ -7,18 +7,22 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
+
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
 public class AIServiceResponse {
 
+    private String messageId;
     private String intent;
-
-    private String response;
-
-    @JsonProperty("triage_level")
-    private TriageLevel triageLevel;
-
     private Double confidence;
+    private String response;
+    private ExtractedDataDto extractedData;
+    private String nextAction;
+    @JsonProperty("triage_level")
+    private TriageLevel triageLevel; // nullable
+    private Boolean requiresHumanReview;
+    private LocalDateTime timestamp;
 }

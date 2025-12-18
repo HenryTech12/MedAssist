@@ -3,6 +3,7 @@ package com.medassist.service;
 import com.medassist.dto.AIServiceRequest;
 import com.medassist.dto.AIServiceResponse;
 import com.medassist.dto.BotMessages;
+import com.medassist.dto.ConversationHistory;
 import com.medassist.entity.Conversation;
 import com.medassist.entity.Message;
 import com.medassist.entity.Patient;
@@ -15,6 +16,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
+import java.util.Map;
 import java.util.Objects;
 import java.util.UUID;
 
@@ -47,6 +50,9 @@ public class WhatsAppService {
         // Step 1: Check if patient exists
         Patient patient = registrationService.findByPhone(normalizedPhone);
 
+        if(Objects.isNull(patient.getRegistrationStatus())) {
+            patient.setRegistrationStatus("AWAITING_NAME");
+        }
         if (patient == null) {
             // New patient - start registration process
             logger.info("New patient detected: {}", normalizedPhone);
@@ -79,9 +85,6 @@ public class WhatsAppService {
             return;
         }
 
-        if(Objects.isNull(patient.getRegistrationStatus())) {
-            patient.setRegistrationStatus("AWAITING_NAME");
-        }
         
         // Step 3: Check if patient is providing their name
         if ("AWAITING_NAME".equals(patient.getRegistrationStatus())) {
@@ -124,11 +127,17 @@ public class WhatsAppService {
         conversation.addMessage(userMessage);
         conversationRepository.save(conversation);
 
+        ConversationHistory conversationHistory = new ConversationHistory();
+        conversationHistory.setContent("");
+        conversationHistory.setTimestamp(LocalDateTime.now());
+        conversationHistory.setRole("PATIENT");
+
         AIServiceRequest aiRequest = AIServiceRequest.builder()
                 .messageId(UUID.randomUUID().toString())
                 .patientId(patient.getId().toString())
-                .sessionId(conversation.getSessionId())
                 .message(messageBody)
+                .timestamp(LocalDateTime.now())
+                .metadata(Map.of())
                 .build();
 
         AIServiceResponse aiResponse = aiServiceClient.processMessage(aiRequest);
