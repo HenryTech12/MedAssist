@@ -14,6 +14,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.Objects;
 import java.util.UUID;
 
 @Service
@@ -75,6 +77,10 @@ public class WhatsAppService {
             twilioService.sendMessage(normalizedPhone, BotMessages.ASK_NAME);
             logger.info("Asked patient {} for name", updatedPatient.getId());
             return;
+        }
+
+        if(Objects.isNull(patient.getRegistrationStatus())) {
+            patient.setRegistrationStatus("AWAITING_NAME");
         }
         
         // Step 3: Check if patient is providing their name
