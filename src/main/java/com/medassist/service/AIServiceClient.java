@@ -33,7 +33,7 @@ public class AIServiceClient {
 
             HttpEntity<AIServiceRequest> entity = new HttpEntity<>(request, headers);
 
-            logger.info("Calling AI Service for message: {}", request.getMessageId());
+            logger.info("Calling AI Service for message: {}", request.getMessage_id());
 
             ResponseEntity<AIServiceResponse> response = restTemplate.postForEntity(
                     url,

@@ -133,8 +133,8 @@ public class WhatsAppService {
         conversationHistory.setRole("PATIENT");
 
         AIServiceRequest aiRequest = AIServiceRequest.builder()
-                .messageId(UUID.randomUUID().toString())
-                .patientId(patient.getId().toString())
+                .message_id(UUID.randomUUID().toString())
+                .patient_id(patient.getId().toString())
                 .message(messageBody)
                 .timestamp(LocalDateTime.now())
                 .metadata(Map.of())
