@@ -25,14 +25,10 @@ public class ConversationController {
 
     @GetMapping
     public ResponseEntity<List<ConversationDTO>> getConversations(
-            @AuthenticationPrincipal UserPrincipal principal,
-            @RequestParam(required = false) String status,
-            @RequestParam(required = false) String triageLevel
+            @AuthenticationPrincipal UserPrincipal principal
     ) {
         List<ConversationDTO> conversations = conversationService.getConversations(
-                principal.getClinicId(),
-                ConversationStatus.valueOf(status),
-                TriageLevel.valueOf(triageLevel)
+                principal.getClinicId()
         );
         return ResponseEntity.ok(conversations);
     }

@@ -32,9 +32,9 @@ public class ConversationService {
     @Autowired
     private PatientRegistrationService patientRegistrationService;
 
-    public List<ConversationDTO> getConversations(String clinicId, ConversationStatus status, TriageLevel triageLevel) {
+    public List<ConversationDTO> getConversations(String clinicId) {
         List<Conversation> conversations = conversationRepository.
-                findByStatusAndTriageLevel(status, triageLevel);
+                findAll();
 
         return conversations.stream()
                 .map(this::toConversationDTO)
