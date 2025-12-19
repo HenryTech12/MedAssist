@@ -51,13 +51,11 @@ public class WhatsAppService {
         // Step 1: Check if patient exists
         Patient patient = registrationService.findByPhone(normalizedPhone);
 
-        if(Objects.isNull(patient.getRegistrationStatus())) {
-            patient.setRegistrationStatus("AWAITING_NAME");
-        }
         if (patient == null) {
             // New patient - start registration process
             logger.info("New patient detected: {}", normalizedPhone);
-            registrationService.startRegistration(normalizedPhone);
+            patient =  registrationService.startRegistration(normalizedPhone);
+
             twilioService.sendMessage(normalizedPhone, BotMessages.WELCOME_MESSAGE);
             return;
         }
@@ -82,6 +80,8 @@ public class WhatsAppService {
             
             // Ask for name
             twilioService.sendMessage(normalizedPhone, BotMessages.ASK_NAME);
+
+
             logger.info("Asked patient {} for name", updatedPatient.getId());
             return;
         }
@@ -100,7 +100,7 @@ public class WhatsAppService {
                 completedPatient.getClinic().getName()
             );
             twilioService.sendMessage(normalizedPhone, confirmationMessage);
-            
+
             logger.info("Registration completed for patient {} ({} {}) - Clinic: {}", 
                        completedPatient.getId(),
                        completedPatient.getFirstName(),

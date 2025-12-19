@@ -133,4 +133,9 @@ public class PatientRegistrationService {
         return patientRepository.findByClinicId(UUID.fromString(clinicId))
                 .stream().map(data -> new PatientDTO(data.getId().toString(),data.getPhone(),data.getFirstName(),data.getLastName(),data.getClinic().getId().toString(),data.getRegisteredAt())).toList();
     }
+
+    /*UPDATE REGISTRATION STATUS */
+    public Patient updateStatus(Patient patient) {
+        return patientRepository.save(patient);
+    }
 }
