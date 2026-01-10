@@ -35,7 +35,9 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                     String clinicId = jwtUtil.extractClinicId(token);
                     String role = jwtUtil.extractRole(token);
 
-                    UserPrincipal userPrincipal = new UserPrincipal(userId, clinicId, role);
+                    UserPrincipal userPrincipal =
+
+                            new UserPrincipal(userId, clinicId, role);
 
                     UsernamePasswordAuthenticationToken authentication =
                             new UsernamePasswordAuthenticationToken(
