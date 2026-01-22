@@ -4,6 +4,13 @@
 
 MedAssist's Appointment Scheduling module provides a comprehensive solution for managing medical appointments through multiple channels: WhatsApp, web dashboard, and mobile applications. This document outlines the implementation details for the complete appointment scheduling system.
 
+### Prerequisites
+
+- **Java 17** or higher (required for switch expressions and text blocks used in code examples)
+- Spring Boot 3.4.x
+- MySQL database
+- Twilio account (for WhatsApp/SMS integration)
+
 ---
 
 ## Table of Contents
